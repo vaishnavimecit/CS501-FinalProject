@@ -1,4 +1,4 @@
-package application;
+package cs510FinalProject;
 
 import javafx.scene.paint.Color;
 import javafx.scene.Node;
@@ -34,7 +34,7 @@ public class Fan extends BorderPane {
 		StackPane mainStack = new StackPane();
 		mainStack.getChildren().add(blades);
 
-	//	getChildren().add(blades);
+		//	getChildren().add(blades);
 		fan = new Timeline(new KeyFrame(Duration.millis(50), e -> spinFan()));
 	    fan.setCycleCount(Timeline.INDEFINITE);
 		fan.play(); // Start animation

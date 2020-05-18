@@ -1,4 +1,4 @@
-package application;
+package cs510FinalProject;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -22,11 +22,11 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-		RadioButton Fanbtn = new RadioButton("Fan Application");
+		RadioButton Fanbtn = new RadioButton("Turn on Fan");
 		Fanbtn.setFocusTraversable(false);
-		RadioButton Carbtn = new RadioButton("Car Application");
+		RadioButton Carbtn = new RadioButton("Drive the Car");
 		Carbtn.setFocusTraversable(false);
-		RadioButton Clockbtn = new RadioButton("Clock Application");
+		RadioButton Clockbtn = new RadioButton("Stop the Clock");
 		Clockbtn.setFocusTraversable(false);
 		
         VBox vBox = new VBox(50);
@@ -38,9 +38,9 @@ public class Main extends Application {
 		fanPane.setVisible(false);
 
 
-		// Create a car application and create new borderpane
+		// Create a car application and create new border pane
         BorderPane carPane = new BorderPane();
-        Text helpText = new Text("Car Is Stopped");
+        Text helpText = new Text("Car Is Stopped - Press right arrow to move the car");
         helpText.setFont(new Font("Time New Roman", 25));
 		Car pane = new Car();
 
@@ -56,7 +56,7 @@ public class Main extends Application {
         pane.setOnMouseReleased(e -> {
             boolean moving = pane.play();
             if (moving){
-                helpText.setText("Car Is Now Moving");
+                helpText.setText("Car Is Now Moving - Press left arrow to slow down");
             } else {
                 helpText.setText("Car Is Stopped");  
             }
@@ -64,14 +64,14 @@ public class Main extends Application {
         pane.setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.RIGHT) { //Happens when user clicks right arrow key
                 pane.increasingSpeed();                 //increases speed and sets the text to moving
-                helpText.setText("Car Is Now Moving");
+                helpText.setText("Car Is Now Moving - Hold Mouse to stop");
             }
             else if (e.getCode() == KeyCode.LEFT) {
                 boolean moving = pane.decreasingSpeed();
                 if(moving){                                    //if the speed is decreasing but not at 0 the car will print is slowing down
                     helpText.setText("Car Is Slowing Down");
                 } else {
-                    helpText.setText("Car Is Stopped");         //either wise the car is completely stopped
+                    helpText.setText("Car Is Stopped"); 
                 }
             }
 		});
@@ -81,7 +81,7 @@ public class Main extends Application {
 
 		//Create Clock Application and new Border Pane
 		Clock clock = new Clock();
-		//String timeString = clock.getHour() + ":" + clock.getMinute() + ":" + clock.getSecond();
+		String timeString = clock.getHour() + ":" + clock.getMinute() + ":" + clock.getSecond();
 
 		// Create a hBox and set it properties
 		HBox hBox = new HBox(5);
@@ -109,12 +109,14 @@ public class Main extends Application {
 		BorderPane borderPane = new BorderPane();
         borderPane.setLeft(vBox);
 
-		//If fan button is selected open fan application and disable other buttons
+		//If fan button is selected open fan application
 		Fanbtn.setOnAction(e -> {
+			Clockbtn.setSelected(false);
+			Carbtn.setSelected(false);
 			if(Fanbtn.isSelected()) {
 				fanPane.setVisible(true);
-				Carbtn.setDisable(true);
-				Clockbtn.setDisable(true);
+				Carbtn.setDisable(false);
+				Clockbtn.setDisable(false);
 				borderPane.setCenter(fanPane);
 			} else {
 				fanPane.setVisible(false);
@@ -124,12 +126,14 @@ public class Main extends Application {
 			}
 		});
 
-		//If car button is selected open car application and disable other buttons
+		//If car button is selected open car application
 		Carbtn.setOnAction(e -> {
+			Fanbtn.setSelected(false);
+			Clockbtn.setSelected(false);
 			if(Carbtn.isSelected()) {
 				carPane.setVisible(true);
-				Fanbtn.setDisable(true);
-				Clockbtn.setDisable(true);
+				Fanbtn.setDisable(false);
+				Clockbtn.setDisable(false);
 				borderPane.setCenter(carPane);
 				pane.requestFocus();
 			} else {
@@ -140,12 +144,14 @@ public class Main extends Application {
 			}
 		});
 
-		//If clock button is selected open fan application and disable other buttons
+		//If clock button is selected open fan application
 		Clockbtn.setOnAction(e -> {
+			Fanbtn.setSelected(false);
+			Carbtn.setSelected(false);
 			if(Clockbtn.isSelected()) {
 				clockPane.setVisible(true);
-				Fanbtn.setDisable(true);
-				Carbtn.setDisable(true);
+				Fanbtn.setDisable(false);
+				Carbtn.setDisable(false);
 				borderPane.setCenter(clockPane);
 			} else {
 				carPane.setVisible(false);
@@ -158,10 +164,10 @@ public class Main extends Application {
 
 		// Create a scene and place it in the stage
 		Scene scene = new Scene(borderPane, width, height);
-		primaryStage.setTitle("Java Project"); // Set the stage title
+		primaryStage.setTitle("CS 501 Final Project"); // Set the title
 		primaryStage.setScene(scene); // Place the scene in the stage
 		primaryStage.setResizable(false);
-		primaryStage.show(); // Display the stage
+		primaryStage.show();
 	}
 	
     public static void main(String[] args) {
