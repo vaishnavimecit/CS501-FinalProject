@@ -1,4 +1,4 @@
-package cs510FinalProject;
+package cs501FinalProject;
 
 import javafx.scene.paint.Color;
 import javafx.scene.Node;
@@ -26,7 +26,7 @@ public class Fan extends BorderPane {
 	private double width = 600;
 	private double height = 350;
 
-	public Fan() {  //constructs a fan pane
+	public Fan() { // constructs a fan pane
 
 		blades = getFullPane(); // Create four arcs
 		list = blades.getChildren(); // List of arcs
@@ -34,11 +34,10 @@ public class Fan extends BorderPane {
 		StackPane mainStack = new StackPane();
 		mainStack.getChildren().add(blades);
 
-		//	getChildren().add(blades);
+		// getChildren().add(blades);
 		fan = new Timeline(new KeyFrame(Duration.millis(50), e -> spinFan()));
-	    fan.setCycleCount(Timeline.INDEFINITE);
+		fan.setCycleCount(Timeline.INDEFINITE);
 		fan.play(); // Start animation
-
 
 		// Create three buttons
 		Button Pause = new Button("Pause");
@@ -51,7 +50,7 @@ public class Fan extends BorderPane {
 		// Place nodes in panes
 		hBox.getChildren().addAll(Pause, Resume, Reverse, setColor);
 
-		//Add to main borderPane
+		// Add to main borderPane
 		setCenter(mainStack);
 		setBottom(hBox);
 
@@ -71,47 +70,47 @@ public class Fan extends BorderPane {
 			this.setRandomColor();
 		});
 
-	//	this.requestFocus();
+		// this.requestFocus();
 
 	}
 
-	protected void spinFan() { //animate bladed spinning
+	protected void spinFan() { // animate bladed spinning
 		for (int i = 1; i < list.size(); i++) {
-			Arc a = (Arc)list.get(i);
+			Arc a = (Arc) list.get(i);
 			a.setStartAngle(a.getStartAngle() + startAngle);
 		}
 	}
 
-	public void pause() { //pause animation
+	public void pause() { // pause animation
 		fan.pause();
 	}
 
-	public void play() { //play animation
+	public void play() { // play animation
 		fan.play();
 	}
 
-	protected void reverse() { //reverse the direction
+	protected void reverse() { // reverse the direction
 		startAngle *= -1;
 	}
 
-	protected void setRandomColor(){
+	protected void setRandomColor() {
 		colorBlades = getRandomColor();
 		for (int i = 1; i < list.size(); i++) {
-			Arc a = (Arc)list.get(i);
+			Arc a = (Arc) list.get(i);
 			a.setFill(colorBlades);
 		}
 	}
 
-	private Color getRandomColor(){
+	private Color getRandomColor() {
 		Random rand = new Random();
 		float r = rand.nextFloat();
 		float g = rand.nextFloat();
 		float b = rand.nextFloat();
-		Color randomColor = new Color(r,g,b, 1);
+		Color randomColor = new Color(r, g, b, 1);
 		return randomColor;
 	}
 
-	private Pane getFullPane() { //Add 4 arcs to a pane and place them in a stack pane
+	private Pane getFullPane() { // Add 4 arcs to a pane and place them in a stack pane
 		Pane pane = new Pane();
 		Arc[] blades = new Arc[4];
 
@@ -126,7 +125,7 @@ public class Fan extends BorderPane {
 		c.setLayoutY(this.height / 2);
 
 		for (int i = 0; i < blades.length; i++) {
-			blades[i] = new Arc(c.getCenterX(), c.getCenterY(), bladeRadius, bladeRadius, (i*90) + 30, 35);
+			blades[i] = new Arc(c.getCenterX(), c.getCenterY(), bladeRadius, bladeRadius, (i * 90) + 30, 35);
 			blades[i].setFill(colorBlades);
 			blades[i].setType(ArcType.ROUND);
 			blades[i].setLayoutX(this.width / 2);

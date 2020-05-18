@@ -1,4 +1,4 @@
-package cs510FinalProject;
+package cs501FinalProject;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;

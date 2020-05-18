@@ -1,4 +1,4 @@
-package cs510FinalProject;
+package cs501FinalProject;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -16,11 +16,11 @@ import javafx.geometry.Insets;
 
 public class Main extends Application {
 
-    private double width = 700;
+	private double width = 700;
 	private double height = 350;
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
+	@Override
+	public void start(Stage primaryStage) throws Exception {
 
 		RadioButton Fanbtn = new RadioButton("Turn on Fan");
 		Fanbtn.setFocusTraversable(false);
@@ -28,58 +28,55 @@ public class Main extends Application {
 		Carbtn.setFocusTraversable(false);
 		RadioButton Clockbtn = new RadioButton("Stop the Clock");
 		Clockbtn.setFocusTraversable(false);
-		
-        VBox vBox = new VBox(50);
-        vBox.setAlignment(Pos.TOP_LEFT);
-        vBox.getChildren().addAll(Fanbtn, Carbtn, Clockbtn);
 
-		//Create the fan application
+		VBox vBox = new VBox(50);
+		vBox.setAlignment(Pos.TOP_LEFT);
+		vBox.getChildren().addAll(Fanbtn, Carbtn, Clockbtn);
+
+		// Create the fan application
 		Fan fanPane = new Fan();
 		fanPane.setVisible(false);
 
-
 		// Create a car application and create new border pane
-        BorderPane carPane = new BorderPane();
-        Text helpText = new Text("Car Is Stopped - Press right arrow to move the car");
-        helpText.setFont(new Font("Time New Roman", 25));
+		BorderPane carPane = new BorderPane();
+		Text helpText = new Text("Car Is Stopped - Press right arrow to move the car");
+		helpText.setFont(new Font("Time New Roman", 25));
 		Car pane = new Car();
 
-        carPane.setCenter(helpText);
-        carPane.setBottom(pane);
-        BorderPane.setMargin(helpText, new Insets(0, 0, -35, 0));
+		carPane.setCenter(helpText);
+		carPane.setBottom(pane);
+		BorderPane.setMargin(helpText, new Insets(0, 0, -35, 0));
 
-        // Create and register handles
-        pane.setOnMousePressed(e ->{ 
-            pane.pause();
-            helpText.setText("Car Is Stopped");
-        });
-        pane.setOnMouseReleased(e -> {
-            boolean moving = pane.play();
-            if (moving){
-                helpText.setText("Car Is Now Moving - Press left arrow to slow down");
-            } else {
-                helpText.setText("Car Is Stopped");  
-            }
-        });
-        pane.setOnKeyPressed(e -> {
-            if (e.getCode() == KeyCode.RIGHT) { //Happens when user clicks right arrow key
-                pane.increasingSpeed();                 //increases speed and sets the text to moving
-                helpText.setText("Car Is Now Moving - Hold Mouse to stop");
-            }
-            else if (e.getCode() == KeyCode.LEFT) {
-                boolean moving = pane.decreasingSpeed();
-                if(moving){                                    //if the speed is decreasing but not at 0 the car will print is slowing down
-                    helpText.setText("Car Is Slowing Down");
-                } else {
-                    helpText.setText("Car Is Stopped"); 
-                }
-            }
+		// Create and register handles
+		pane.setOnMousePressed(e -> {
+			pane.pause();
+			helpText.setText("Car Is Stopped");
 		});
-		
+		pane.setOnMouseReleased(e -> {
+			boolean moving = pane.play();
+			if (moving) {
+				helpText.setText("Car Is Now Moving - Press left arrow to slow down");
+			} else {
+				helpText.setText("Car Is Stopped");
+			}
+		});
+		pane.setOnKeyPressed(e -> {
+			if (e.getCode() == KeyCode.RIGHT) { // Happens when user clicks right arrow key
+				pane.increasingSpeed(); // increases speed and sets the text to moving
+				helpText.setText("Car Is Now Moving - Hold Mouse to stop");
+			} else if (e.getCode() == KeyCode.LEFT) {
+				boolean moving = pane.decreasingSpeed();
+				if (moving) { // if the speed is decreasing but not at 0 the car will print is slowing down
+					helpText.setText("Car Is Slowing Down");
+				} else {
+					helpText.setText("Car Is Stopped");
+				}
+			}
+		});
+
 		carPane.setVisible(false);
 
-
-		//Create Clock Application and new Border Pane
+		// Create Clock Application and new Border Pane
 		Clock clock = new Clock();
 		String timeString = clock.getHour() + ":" + clock.getMinute() + ":" + clock.getSecond();
 
@@ -104,16 +101,15 @@ public class Main extends Application {
 		clockPane.setBottom(hBox);
 		clockPane.setVisible(false);
 
-
 		// Create a border pane and place the nodes in to it
 		BorderPane borderPane = new BorderPane();
-        borderPane.setLeft(vBox);
+		borderPane.setLeft(vBox);
 
-		//If fan button is selected open fan application
+		// If fan button is selected open fan application
 		Fanbtn.setOnAction(e -> {
 			Clockbtn.setSelected(false);
 			Carbtn.setSelected(false);
-			if(Fanbtn.isSelected()) {
+			if (Fanbtn.isSelected()) {
 				fanPane.setVisible(true);
 				Carbtn.setDisable(false);
 				Clockbtn.setDisable(false);
@@ -126,11 +122,11 @@ public class Main extends Application {
 			}
 		});
 
-		//If car button is selected open car application
+		// If car button is selected open car application
 		Carbtn.setOnAction(e -> {
 			Fanbtn.setSelected(false);
 			Clockbtn.setSelected(false);
-			if(Carbtn.isSelected()) {
+			if (Carbtn.isSelected()) {
 				carPane.setVisible(true);
 				Fanbtn.setDisable(false);
 				Clockbtn.setDisable(false);
@@ -144,11 +140,11 @@ public class Main extends Application {
 			}
 		});
 
-		//If clock button is selected open fan application
+		// If clock button is selected open fan application
 		Clockbtn.setOnAction(e -> {
 			Fanbtn.setSelected(false);
 			Carbtn.setSelected(false);
-			if(Clockbtn.isSelected()) {
+			if (Clockbtn.isSelected()) {
 				clockPane.setVisible(true);
 				Fanbtn.setDisable(false);
 				Carbtn.setDisable(false);
@@ -161,7 +157,6 @@ public class Main extends Application {
 			}
 		});
 
-
 		// Create a scene and place it in the stage
 		Scene scene = new Scene(borderPane, width, height);
 		primaryStage.setTitle("CS 501 Final Project"); // Set the title
@@ -169,8 +164,8 @@ public class Main extends Application {
 		primaryStage.setResizable(false);
 		primaryStage.show();
 	}
-	
-    public static void main(String[] args) {
-        launch(args);
-    }
+
+	public static void main(String[] args) {
+		launch(args);
+	}
 }
