@@ -1,5 +1,5 @@
-# CS501-QuizApplication
-Quiz Application using JavaFX and MS Access DB
+# CS501-Final Project
+Final Project using JavaFX
 
 ## Group Members
 ##### Vaishnavi Gopalakrishnan
